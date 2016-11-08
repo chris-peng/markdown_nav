@@ -31,7 +31,7 @@
         $("body").prepend('<div class="BlogAnchor">' + 
 			'<span style="position:absolute;top:-6px;left:0px;cursor:pointer;" onclick="$(\'.BlogAnchor\').hide();">×</span>' +
             '<p>' + 
-                '<b id="AnchorContentToggle" title="收起" style="cursor:pointer;">目录[-]</b>' + 
+                '<b id="AnchorContentToggle" title="收起" style="cursor:pointer;">目录▲</b>' + 
             '</p>' + 
             '<div class="AnchorContent" id="AnchorContent"> </div>' + 
         '</div>' );
@@ -60,11 +60,11 @@
 
         $("#AnchorContentToggle").click(function(){
             var text = $(this).html();
-            if(text=="目录[-]"){
-                $(this).html("目录[+]");
+            if(text=="目录▲"){
+                $(this).html("目录▼");
                 $(this).attr({"title":"展开"});
             }else{
-                $(this).html("目录[-]");
+                $(this).html("目录▲");
                 $(this).attr({"title":"收起"});
             }
             $("#AnchorContent").toggle();
