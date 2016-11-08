@@ -97,6 +97,7 @@
 			.BlogAnchor li{
 			    text-indent: 0.5rem;
 			    font-size: 14px;
+				list-style: none;
 			}
 			.BlogAnchor li .item_h1{
 			    margin-left: 0rem;
