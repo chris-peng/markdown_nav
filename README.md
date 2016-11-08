@@ -29,7 +29,7 @@
         }
 
         $("body").prepend('<div class="BlogAnchor">' + 
-			'<span style="position:absolute;top:-6px;left:0px;cursor:pointer;" onclick="$(\'.BlogAnchor\').hide();">×</span>' +
+			'<span style="color:red;position:absolute;top:-6px;left:0px;cursor:pointer;" onclick="$(\'.BlogAnchor\').hide();">×</span>' +
             '<p>' + 
                 '<b id="AnchorContentToggle" title="收起" style="cursor:pointer;">目录▲</b>' + 
             '</p>' + 
@@ -54,8 +54,9 @@
                 className = 'item_h2';
             }
             $(item).attr("id","wow"+id);
+			$(item).addClass("wow_head");
             $("#AnchorContent").css('max-height', ($(window).height() - 180) + 'px');
-            $("#AnchorContent").append('<li><a class="'+className+' anchor-link" onclick="return false;" href="#" link="#wow'+id+'">'+name+" · "+$(this).text()+'</a></li>');
+            $("#AnchorContent").append('<li><a class="nav_item '+className+' anchor-link" onclick="return false;" href="#" link="#wow'+id+'">'+name+" · "+$(this).text()+'</a></li>');
         });
 
         $("#AnchorContentToggle").click(function(){
@@ -72,6 +73,23 @@
         $(".anchor-link").click(function(){
             $("html,body").animate({scrollTop: $($(this).attr("link")).offset().top}, 500);
         });
+		
+		var headerNavs = $(".BlogAnchor li .nav_item");
+		var headerTops = [];
+		$(".wow_head").each(function(i, n){
+			headerTops.push($(n).offset().top);
+		});
+		$(window).scroll(function(){
+			var scrollTop = $(window).scrollTop();
+			$.each(headerTops, function(i, n){
+				var distance = n - scrollTop;
+				if(distance >= 0){
+					$(".BlogAnchor li .nav_item.current").removeClass('current');
+					$(headerNavs[i]).addClass('current');
+					return false;
+				}
+			});
+		});
      });
     </script>
     <style>
@@ -100,6 +118,9 @@
             font-size: 14px;
             list-style: none;
         }
+		.BlogAnchor li .nav_item{
+			padding: 3px;
+		}
         .BlogAnchor li .item_h1{
             margin-left: 0rem;
         }
@@ -107,6 +128,10 @@
             margin-left: 2rem;
             font-size: 0.8rem;
         }
+		.BlogAnchor li .nav_item.current{
+			color: white;
+			background-color: #5cc26f;
+		}
         #AnchorContentToggle {
             font-size: 13px;
             font-weight: normal;
