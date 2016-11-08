@@ -1,6 +1,5 @@
 # markdown自动生成导航目录
-## [示例页面](https://chris-peng.github.io/markdown_nav/%E7%A4%BA%E4%BE%8B.html)
-把这一段代码插入到markdown生成的HTML文件的head标签中即可：
+把这一段代码插入到markdown生成的HTML文件的head标签中，将会自动根据markdown的标题按级别生成导航目录\([示例页面](https://chris-peng.github.io/markdown_nav/%E7%A4%BA%E4%BE%8B.html)\)：
 
 		<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 		<script type="text/javascript">
