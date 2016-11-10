@@ -3,8 +3,12 @@
 
 	<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script type="text/javascript">
+	 //是否显示导航栏
+	 var showNavBar = true;
+	 //是否展开导航栏
+	 var expandNavBar = true;
+	 
      $(document).ready(function(){
-
         var h1s = $("body").find("h1");
         var h2s = $("body").find("h2");
         var h3s = $("body").find("h3");
@@ -90,6 +94,15 @@
 				}
 			});
 		});
+
+		if(!showNavBar){
+			$('.BlogAnchor').hide();
+		}
+		if(!expandNavBar){
+			$(this).html("目录▼");
+            $(this).attr({"title":"展开"});
+			$("#AnchorContent").hide();
+		}
      });
     </script>
     <style>
