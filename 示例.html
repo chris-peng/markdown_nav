@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>示例</title>
+<title>MarkdownPad Document</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
 /* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
@@ -289,13 +290,15 @@ img {
   max-width: 100%
 }
 </style>
-<script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
  //是否显示导航栏
  var showNavBar = true;
  //是否展开导航栏
  var expandNavBar = true;
-
+ //是否给标题自动增加序号
+ var addSNToTitle = true;
+ 
  $(document).ready(function(){
     var h1s = $("body").find("h1");
     var h2s = $("body").find("h2");
@@ -311,8 +314,9 @@ img {
         if(headCounts[i] > 0){
             if(vH1Tag == null){
                 vH1Tag = 'h' + (i + 1);
-            }else{
+            }else if(vH2Tag == null){
                 vH2Tag = 'h' + (i + 1);
+                break;
             }
         }
     }
@@ -321,7 +325,7 @@ img {
     }
 
     $("body").prepend('<div class="BlogAnchor">' + 
-        '<span style="color:red;position:absolute;top:-6px;left:0px;cursor:pointer;" onclick="$(\'.BlogAnchor\').hide();">×</span>' +
+		'<span style="color:red;position:absolute;top:-6px;left:0px;cursor:pointer;" onclick="$(\'.BlogAnchor\').hide();">×</span>' +
         '<p>' + 
             '<b id="AnchorContentToggle" title="收起" style="cursor:pointer;">目录▲</b>' + 
         '</p>' + 
@@ -330,7 +334,7 @@ img {
 
     var vH1Index = 0;
     var vH2Index = 0;
-    $("body").find("h1,h2,h3,h4,h5,h6").each(function(i,item){
+    $("body").find(vH1Tag + (vH2Tag != null ? (','+vH2Tag) : '')).each(function(i,item){
         var id = '';
         var name = '';
         var tag = $(item).get(0).tagName.toLowerCase();
@@ -346,9 +350,13 @@ img {
             className = 'item_h2';
         }
         $(item).attr("id","wow"+id);
-        $(item).addClass("wow_head");
+		$(item).addClass("wow_head");
+		var originText = $(item).text();
+		if(addSNToTitle){
+			$(item).text(name + '. ' + originText);
+		}
         $("#AnchorContent").css('max-height', ($(window).height() - 180) + 'px');
-        $("#AnchorContent").append('<li><a class="nav_item '+className+' anchor-link" onclick="return false;" href="#" link="#wow'+id+'">'+name+" · "+$(this).text()+'</a></li>');
+        $("#AnchorContent").append('<li><a class="nav_item '+className+' anchor-link" onclick="return false;" href="#" link="#wow'+id+'">'+name+" · "+originText+'</a></li>');
     });
 
     $("#AnchorContentToggle").click(function(){
@@ -365,32 +373,32 @@ img {
     $(".anchor-link").click(function(){
         $("html,body").animate({scrollTop: $($(this).attr("link")).offset().top}, 500);
     });
+	
+	var headerNavs = $(".BlogAnchor li .nav_item");
+	var headerTops = [];
+	$(".wow_head").each(function(i, n){
+		headerTops.push($(n).offset().top);
+	});
+	$(window).scroll(function(){
+		var scrollTop = $(window).scrollTop();
+		$.each(headerTops, function(i, n){
+			var distance = n - scrollTop;
+			if(distance >= 0){
+				$(".BlogAnchor li .nav_item.current").removeClass('current');
+				$(headerNavs[i]).addClass('current');
+				return false;
+			}
+		});
+	});
 
-    var headerNavs = $(".BlogAnchor li .nav_item");
-    var headerTops = [];
-    $(".wow_head").each(function(i, n){
-        headerTops.push($(n).offset().top);
-    });
-    $(window).scroll(function(){
-        var scrollTop = $(window).scrollTop();
-        $.each(headerTops, function(i, n){
-            var distance = n - scrollTop;
-            if(distance >= 0){
-                $(".BlogAnchor li .nav_item.current").removeClass('current');
-                $(headerNavs[i]).addClass('current');
-                return false;
-            }
-        });
-    });
-
-    if(!showNavBar){
-        $('.BlogAnchor').hide();
-    }
-    if(!expandNavBar){
-        $(this).html("目录▼");
+	if(!showNavBar){
+		$('.BlogAnchor').hide();
+	}
+	if(!expandNavBar){
+		$(this).html("目录▼");
         $(this).attr({"title":"展开"});
-        $("#AnchorContent").hide();
-    }
+		$("#AnchorContent").hide();
+	}
  });
 </script>
 <style>
@@ -419,9 +427,9 @@ img {
         font-size: 14px;
         list-style: none;
     }
-    .BlogAnchor li .nav_item{
-        padding: 3px;
-    }
+	.BlogAnchor li .nav_item{
+		padding: 3px;
+	}
     .BlogAnchor li .item_h1{
         margin-left: 0rem;
     }
@@ -429,10 +437,10 @@ img {
         margin-left: 2rem;
         font-size: 0.8rem;
     }
-    .BlogAnchor li .nav_item.current{
-        color: white;
-        background-color: #5cc26f;
-    }
+	.BlogAnchor li .nav_item.current{
+		color: white;
+		background-color: #5cc26f;
+	}
     #AnchorContentToggle {
         font-size: 13px;
         font-weight: normal;
