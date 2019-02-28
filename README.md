@@ -1,5 +1,7 @@
 # markdown自动生成导航目录
-把这一段代码插入到markdown生成的HTML文件的head标签中，将会自动根据markdown的标题按级别生成导航目录\([示例页面](https://chris-peng.github.io/markdown_nav/%E7%A4%BA%E4%BE%8B.html)\)，可通过该js最前面的三个变量showNavBar、expandNavBar、addSNToTitle分别控制是否显示导航栏、是否展开导航栏、是否给标题自动增加序号：
+把这一段代码插入到markdown生成的HTML文件的head标签中，将会自动根据markdown的标题按级别生成导航目录\([示例页面](https://chris-peng.github.io/markdown_nav/%E7%A4%BA%E4%BE%8B.html)\)，可通过该js最前面的三个变量showNavBar、expandNavBar、addSNToTitle分别控制是否显示导航栏、是否展开导航栏、是否给标题自动增加序号。如果是api文档，这里有个[md模板](https://github.com/chris-peng/markdown-template-api)。
+
+代码如下：
 
 	<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
